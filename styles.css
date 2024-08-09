@@ -1,0 +1,23 @@
+/* Grid  */
+
+body {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  margin: 0;
+}
+
+.grid-container {
+  border: 1px solid black;
+  display: flex;
+  flex-wrap: wrap;
+  width: 600px;
+  height: 600px;
+}
+
+.grid-square {
+  box-sizing: border-box;
+  border: 1px solid black;
+}
