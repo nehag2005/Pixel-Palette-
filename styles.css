@@ -22,3 +22,17 @@ body {
   box-sizing: border-box;
   border: 0.5px solid black;
 }
+
+/* Tools */
+
+img {
+  height: 30px;
+  width: 30px;
+}
+
+.toolset {
+  display: flex;
+  border: 2px solid black;
+  gap: 3.8rem;
+  padding: 10px;
+}

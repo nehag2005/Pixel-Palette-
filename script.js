@@ -1,18 +1,25 @@
 // Variable declarations
 let gridSizeValue;
+let eraserIsActive = false;
+let colorPickerIsActive = false;
 
-// Get user input for grid size
+// Function calls
 
-const gridSizeBtn = document.getElementById("gridBtn");
-const gridInput = document.getElementById("gridSize");
-gridSizeBtn.addEventListener("click", () => {
-  gridSizeValue = parseInt(gridInput.value);
-  const isValid = validateUserInput(gridSizeValue);
-  if (isValid) {
-    createGrid(gridSizeValue);
-  }
-  gridInput.value = "";
+eraserTool();
+colorPicker();
+
+// Collect slider input
+
+const gridSizeInput = document.getElementById("gridSizeInput");
+const gridSizeLabel = document.getElementById("gridSizeLabel");
+
+gridSizeInput.addEventListener("input", () => {
+  gridSizeValue = parseInt(gridSizeInput.value);
+  gridSizeLabel.textContent = `Select a grid size (${gridSizeValue}x${gridSizeValue})`;
+  createGrid(gridSizeValue);
 });
+
+// Functions
 
 // Apply hover effect on grid squares
 
@@ -23,10 +30,57 @@ function applyHover() {
     square.addEventListener("mouseover", () => {
       square.style.backgroundColor = "blue";
     });
+  });
+}
 
-    square.addEventListener("mouseout", () => {
-      square.style.backgroundColor = "white";
-    });
+// Create color picker tool
+
+function colorPicker() {
+  const colorPickerImg = document.getElementById("#colorPickerImg");
+  const colorPickerDropdown = document.getElementById("#colorPickerInput");
+
+  let color = "black";
+
+  colorPickerImg.addEventListener("click", () => {
+    colorPickerDropdown.click();
+  });
+
+  colorPickerDropdown.addEventListener("input", (event) => {
+    color = event.target.value;
+  });
+}
+
+// Create eraser tool
+
+function eraserTool() {
+  const eraser = document.querySelector(".eraser");
+
+  function erase(event) {
+    event.target.style.backgroundColor = "white";
+  }
+
+  // Toggle the eraser tool
+
+  eraser.addEventListener("click", () => {
+    eraserIsActive = !eraserIsActive;
+
+    if (eraserIsActive) {
+      eraser.style.border = "1px solid black";
+      eraser.style.backgroundColor = "lightgrey";
+
+      const gridSquare = document.querySelectorAll(".grid-square");
+      gridSquare.forEach((square) => {
+        square.addEventListener("mouseover", erase);
+      });
+    } else {
+      eraser.style.border = "none";
+      eraser.style.backgroundColor = "";
+
+      const gridSquare = document.querySelectorAll(".grid-square");
+      gridSquare.forEach((square) => {
+        square.removeEventListener("mouseover", erase);
+      });
+    }
   });
 }
 
@@ -48,24 +102,4 @@ function createGrid(gridSize) {
   }
 
   applyHover();
-}
-
-// Validate user input
-function validateUserInput(gridSize) {
-  // Remove previous warning
-  const prevWarningMsg = document.querySelector(".grid-warning");
-  if (prevWarningMsg) {
-    prevWarningMsg.remove();
-  }
-
-  // Create warning message
-  if (isNaN(gridSize) || gridSize < 1 || gridSize > 100) {
-    gridWarningMsg = document.createElement("p");
-    gridWarningMsg.textContent =
-      "Invalid size. Please enter a grid size between 1 and 100 inclusively.";
-    gridWarningMsg.className = "grid-warning";
-    document.querySelector(".gridInput").appendChild(gridWarningMsg);
-    return false;
-  }
-  return true;
 }

@@ -9,13 +9,46 @@
   </head>
   <body>
     <div class="gridInput">
-      <input
-        type="text"
-        id="gridSize"
-        placeholder="Enter grid size (e.g., 16 for 16x16 grid)"
-        size="40"
-      />
-      <button id="gridBtn">Create Grid</button>
+      <form action="/action_page.php">
+        <label id="gridSizeLabel" for="gridSizeInput">
+          Select a grid size (16x16)
+        </label>
+        <input type="range" id="gridSizeInput" min="1" max="64" />
+      </form>
+    </div>
+    <div class="toolset">
+      <div class="colorPicker">
+        <img
+          src="./Tools/colorPicker.svg"
+          id="colorPickerImg"
+          alt="Color Picker"
+        />
+        <input
+          type="color"
+          id="colorPickerInput"
+          class="color-picker"
+          value="#000000"
+          style="display: none"
+        />
+      </div>
+      <div class="eraser">
+        <img src="./Tools/eraserTool.svg" alt="eraser" />
+      </div>
+      <div class="paintBucket">
+        <img src="./Tools/paintBucket.svg" alt="Paint Bucket" />
+      </div>
+      <div class="undoBtn">
+        <img src="./Tools/undo.svg" alt="Undo Button" />
+      </div>
+      <div class="redoBtn">
+        <img src="./Tools/redo.svg" alt="Redo Button" />
+      </div>
+      <div class="resetBtn">
+        <img src="./Tools/reset.svg" alt="Reset Button" />
+      </div>
+      <div class="downloadBtn">
+        <img src="./Tools/download.svg" alt="Download Button" />
+      </div>
     </div>
     <div class="grid-container"></div>
   </body>
