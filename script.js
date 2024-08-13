@@ -7,6 +7,7 @@ let colorPickerIsActive = false;
 
 eraserTool();
 colorPicker();
+reset();
 
 // Collect slider input
 
@@ -31,6 +32,18 @@ function applyHover(color) {
   gridSquare.forEach((square) => {
     square.addEventListener("mouseover", () => {
       square.style.backgroundColor = color;
+    });
+  });
+}
+
+// Create a reset button
+function reset() {
+  const resetBtn = document.querySelector(".resetBtn");
+
+  resetBtn.addEventListener("click", () => {
+    const gridSquare = document.querySelectorAll(".grid-square");
+    gridSquare.forEach((square) => {
+      square.style.backgroundColor = white;
     });
   });
 }
