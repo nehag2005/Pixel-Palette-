@@ -19,16 +19,18 @@ gridSizeInput.addEventListener("input", () => {
   createGrid(gridSizeValue);
 });
 
+// Close the color picker when clicking outside
+
 // Functions
 
 // Apply hover effect on grid squares
 
-function applyHover() {
+function applyHover(color) {
   const gridSquare = document.querySelectorAll(".grid-square");
 
   gridSquare.forEach((square) => {
     square.addEventListener("mouseover", () => {
-      square.style.backgroundColor = "blue";
+      square.style.backgroundColor = color;
     });
   });
 }
@@ -36,17 +38,37 @@ function applyHover() {
 // Create color picker tool
 
 function colorPicker() {
-  const colorPickerImg = document.getElementById("#colorPickerImg");
-  const colorPickerDropdown = document.getElementById("#colorPickerInput");
-
-  let color = "black";
-
-  colorPickerImg.addEventListener("click", () => {
-    colorPickerDropdown.click();
+  const colorPickerImg = document.getElementById("colorPickerImg");
+  const colorPickerDropdown = document.getElementById("colorPickerInput");
+  let selection = "black";
+  colorPickerDropdown.addEventListener("input", (event) => {
+    selection = event.target.value;
+    applyHover(selection);
   });
 
-  colorPickerDropdown.addEventListener("input", (event) => {
-    color = event.target.value;
+  colorPickerImg.addEventListener("click", () => {
+    colorPickerIsActive = !colorPickerIsActive;
+
+    if (colorPickerIsActive) {
+      colorPickerImg.style.border = "1px solid black";
+      colorPickerImg.style.backgroundColor = "lightgrey";
+
+      colorPickerDropdown.click();
+    } else {
+      colorPickerImg.style.border = "none";
+      colorPickerImg.style.backgroundColor = "";
+    }
+  });
+
+  document.addEventListener("click", (event) => {
+    if (
+      !colorPickerImg.contains(event.target) &&
+      !colorPickerDropdown.contains(event.target)
+    ) {
+      colorPickerImg.style.border = "none";
+      colorPickerImg.style.backgroundColor = "";
+      colorPickerIsActive = false;
+    }
   });
 }
 
@@ -100,6 +122,4 @@ function createGrid(gridSize) {
     gridSquare.style.height = `${singleSqSize}px`;
     gridContainer.appendChild(gridSquare);
   }
-
-  applyHover();
 }
