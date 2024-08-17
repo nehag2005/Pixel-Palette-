@@ -4,6 +4,10 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" href="styles.css" />
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/0.5.0-beta4/html2canvas.min.js"
+      defer
+    ></script>
     <script src="script.js" defer></script>
     <title>Etch-a-Sketch</title>
   </head>
@@ -15,32 +19,35 @@
         </label>
         <input type="range" id="gridSizeInput" min="1" max="64" />
       </form>
+      <div class="modes">
+        <div style="cursor: pointer" class="hover-mode">
+          <img src="./Tools/hoverMode.svg" alt="hoverMode" />
+        </div>
+        <div style="cursor: pointer" class="drawing-mode">
+          <img src="./Tools/drawingMode.svg" alt="drawingMode" />
+        </div>
+      </div>
     </div>
     <div class="toolset">
       <div class="colorPicker">
-        <img
-          src="./Tools/colorPicker.svg"
-          id="colorPickerImg"
-          alt="Color Picker"
-        />
         <input
+          style="cursor: pointer"
           type="color"
           id="colorPickerInput"
           class="color-picker"
           value="#000000"
-          style="display: none"
         />
       </div>
-      <div class="eraser">
+      <div style="cursor: pointer" class="eraser">
         <img src="./Tools/eraserTool.svg" alt="eraser" />
       </div>
-      <div class="paintBucket">
+      <div style="cursor: pointer" class="paintBucket">
         <img src="./Tools/paintBucket.svg" alt="Paint Bucket" />
       </div>
-      <div class="resetBtn">
+      <div style="cursor: pointer" class="resetBtn">
         <img src="./Tools/reset.svg" alt="Reset Button" />
       </div>
-      <div class="downloadBtn">
+      <div style="cursor: pointer" class="downloadBtn">
         <img src="./Tools/download.svg" alt="Download Button" />
       </div>
     </div>

@@ -5,7 +5,7 @@ body {
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  gap: 3rem;
+  gap: 2rem;
   height: 100vh;
   margin: 0;
 }
@@ -16,11 +16,33 @@ body {
   flex-wrap: wrap;
   width: 600px;
   height: 600px;
+  background-color: white;
 }
 
 .grid-square {
   box-sizing: border-box;
   border: 0.5px solid black;
+}
+
+.gridInput {
+  display: flex;
+  gap: 6rem;
+  margin-top: 30px;
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.modes {
+  display: flex;
+  gap: 2.5rem;
+  border: 3px solid black;
+  border-radius: 12px;
+  padding: 10px 25px;
 }
 
 /* Tools */
@@ -34,5 +56,30 @@ img {
   display: flex;
   border: 2px solid black;
   gap: 3.8rem;
-  padding: 10px;
+  padding: 7px;
+}
+
+.color-picker {
+  width: 35px;
+  height: 35px;
+}
+
+/* slide */
+
+input[type="range"] {
+  -webkit-appearance: none;
+  width: 100%;
+  height: 8px;
+  background: #000;
+  border-radius: 5px;
+}
+
+/* Styling the slider thumb */
+input[type="range"]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  width: 20px;
+  height: 20px;
+  background: #000;
+  border-radius: 50%;
+  cursor: pointer;
 }

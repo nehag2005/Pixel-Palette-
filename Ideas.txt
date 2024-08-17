@@ -1,0 +1,6 @@
+- Create a drawing mode 
+- Paint bucket algorithm
+- Work on the UI
+- Fix color dropper position
+- Fix quality of downloaded img
+- Add free hand drawing tools

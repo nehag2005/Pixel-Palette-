@@ -1,13 +1,15 @@
 // Variable declarations
 let gridSizeValue;
 let eraserIsActive = false;
-let colorPickerIsActive = false;
+let paintBucketIsActive = false;
 
 // Function calls
 
 eraserTool();
 colorPicker();
 reset();
+download();
+paintBucket();
 
 // Collect slider input
 
@@ -20,9 +22,43 @@ gridSizeInput.addEventListener("input", () => {
   createGrid(gridSizeValue);
 });
 
-// Close the color picker when clicking outside
-
 // Functions
+
+function paintBucket() {
+  const paintBucket = document.querySelector(".paintBucket");
+
+  paintBucket.addEventListener("click", () => {
+    paintBucketIsActive = !paintBucketIsActive;
+
+    if (paintBucketIsActive) {
+      paintBucket.style.border = "1px solid black";
+      paintBucket.style.backgroundColor = "lightgrey";
+    } else {
+      paintBucket.style.border = "none";
+      paintBucket.style.backgroundColor = "";
+    }
+  });
+}
+
+// Download your art work
+
+function download() {
+  const downloadBtn = document.querySelector(".downloadBtn");
+
+  downloadBtn.addEventListener("click", () => {
+    const gridContainer = document.querySelector(".grid-container");
+
+    html2canvas(gridContainer, { scale: 15 }).then(function (canvas) {
+      const gridImg = canvas.toDataURL("image/png");
+
+      const downloadLink = document.createElement("a");
+      downloadLink.href = gridImg;
+      downloadLink.download = "sketch.png";
+
+      downloadLink.click();
+    });
+  });
+}
 
 // Apply hover effect on grid squares
 
@@ -43,7 +79,7 @@ function reset() {
   resetBtn.addEventListener("click", () => {
     const gridSquare = document.querySelectorAll(".grid-square");
     gridSquare.forEach((square) => {
-      square.style.backgroundColor = white;
+      square.style.backgroundColor = "white";
     });
   });
 }
@@ -51,27 +87,18 @@ function reset() {
 // Create color picker tool
 
 function colorPicker() {
-  const colorPickerImg = document.getElementById("colorPickerImg");
-  const colorPickerDropdown = document.getElementById("colorPickerInput");
+  const colorPickerInput = document.getElementById("colorPickerInput");
   let selection = "black";
-  colorPickerDropdown.addEventListener("input", (event) => {
+  colorPickerInput.addEventListener("input", (event) => {
     selection = event.target.value;
     applyHover(selection);
   });
 
-  colorPickerImg.addEventListener("click", () => {
-    colorPickerIsActive = !colorPickerIsActive;
-
-    if (colorPickerIsActive) {
-      colorPickerImg.style.border = "1px solid black";
-      colorPickerImg.style.backgroundColor = "lightgrey";
-
-      colorPickerDropdown.click();
-    } else {
-      colorPickerImg.style.border = "none";
-      colorPickerImg.style.backgroundColor = "";
-    }
+  colorPickerInput.addEventListener("click", () => {
+    colorPickerDropdown.click();
   });
+
+  // Close the color picker when clicking outside
 
   document.addEventListener("click", (event) => {
     if (
@@ -136,3 +163,9 @@ function createGrid(gridSize) {
     gridContainer.appendChild(gridSquare);
   }
 }
+
+// Set default grid size to 16
+
+document.addEventListener("DOMContentLoaded", () => {
+  createGrid(16);
+});
