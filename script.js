@@ -2,6 +2,9 @@
 let gridSizeValue;
 let eraserIsActive = false;
 let paintBucketIsActive = false;
+let hoverIsActive = true;
+let drawingIsActive = false;
+let selection = "black";
 
 // Function calls
 
@@ -9,7 +12,8 @@ eraserTool();
 colorPicker();
 reset();
 download();
-paintBucket();
+//paintBucket();
+selectModes();
 
 // Collect slider input
 
@@ -24,7 +28,11 @@ gridSizeInput.addEventListener("input", () => {
 
 // Functions
 
-function paintBucket() {
+// Fill colour in the grid
+
+// Create paint bucket tool
+
+/*function paintBucket() {
   const paintBucket = document.querySelector(".paintBucket");
 
   paintBucket.addEventListener("click", () => {
@@ -33,10 +41,75 @@ function paintBucket() {
     if (paintBucketIsActive) {
       paintBucket.style.border = "1px solid black";
       paintBucket.style.backgroundColor = "lightgrey";
+
+      floodFill();
     } else {
       paintBucket.style.border = "none";
       paintBucket.style.backgroundColor = "";
     }
+  });
+}
+
+// Implement Flood Fill Algorithm for the paint bucket tool
+
+function dfs(grid, i, j, oldColor, newColor) {
+  const n = grid; // number of rows (i)
+  const m = grid; // number of columns (j)
+}
+function floodFill() {}*/
+
+// Handle hover mode
+
+function handleHover(event) {
+  event.target.style.backgroundColor = selection;
+}
+
+// Handle click mode
+
+function handleClick(event) {
+  event.target.style.backgroundColor = selection;
+}
+
+// Apply modes
+function applyMode() {
+  const gridSquare = document.querySelectorAll(".grid-square");
+
+  gridSquare.forEach((square) => {
+    square.removeEventListener("mouseover", handleHover);
+    square.removeEventListener("click", handleClick);
+
+    if (hoverIsActive) {
+      square.addEventListener("mouseover", handleHover);
+    } else {
+      square.addEventListener("click", handleClick);
+    }
+  });
+}
+
+// Select modes
+
+function selectModes() {
+  const hoverMode = document.querySelector(".hover-mode");
+  const drawingMode = document.querySelector(".drawing-mode");
+
+  hoverMode.addEventListener("click", () => {
+    hoverIsActive = true;
+    drawingIsActive = false;
+    hoverMode.style.border = "1px solid black";
+    hoverMode.style.backgroundColor = "lightgrey";
+    drawingMode.style.backgroundColor = "";
+    drawingMode.style.border = "none";
+    applyMode();
+  });
+
+  drawingMode.addEventListener("click", () => {
+    drawingIsActive = true;
+    hoverIsActive = false;
+    drawingMode.style.border = "1px solid black";
+    drawingMode.style.backgroundColor = "lightgrey";
+    hoverMode.style.backgroundColor = "";
+    hoverMode.style.border = "none";
+    applyMode();
   });
 }
 
@@ -60,18 +133,6 @@ function download() {
   });
 }
 
-// Apply hover effect on grid squares
-
-function applyHover(color) {
-  const gridSquare = document.querySelectorAll(".grid-square");
-
-  gridSquare.forEach((square) => {
-    square.addEventListener("mouseover", () => {
-      square.style.backgroundColor = color;
-    });
-  });
-}
-
 // Create a reset button
 function reset() {
   const resetBtn = document.querySelector(".resetBtn");
@@ -88,27 +149,12 @@ function reset() {
 
 function colorPicker() {
   const colorPickerInput = document.getElementById("colorPickerInput");
-  let selection = "black";
   colorPickerInput.addEventListener("input", (event) => {
     selection = event.target.value;
-    applyHover(selection);
   });
 
   colorPickerInput.addEventListener("click", () => {
     colorPickerDropdown.click();
-  });
-
-  // Close the color picker when clicking outside
-
-  document.addEventListener("click", (event) => {
-    if (
-      !colorPickerImg.contains(event.target) &&
-      !colorPickerDropdown.contains(event.target)
-    ) {
-      colorPickerImg.style.border = "none";
-      colorPickerImg.style.backgroundColor = "";
-      colorPickerIsActive = false;
-    }
   });
 }
 

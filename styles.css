@@ -42,7 +42,7 @@ form {
   gap: 2.5rem;
   border: 3px solid black;
   border-radius: 12px;
-  padding: 10px 25px;
+  padding: 7px 25px;
 }
 
 /* Tools */
@@ -82,4 +82,13 @@ input[type="range"]::-webkit-slider-thumb {
   background: #000;
   border-radius: 50%;
   cursor: pointer;
+}
+
+/* Modes */
+
+.modeBox {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.25rem;
 }
