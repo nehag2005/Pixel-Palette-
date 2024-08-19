@@ -1,4 +1,5 @@
 // Variable declarations
+let gridArr = [];
 let gridSizeValue;
 let eraserIsActive = false;
 let paintBucketIsActive = false;
@@ -12,7 +13,7 @@ eraserTool();
 colorPicker();
 reset();
 download();
-//paintBucket();
+paintBucket();
 selectModes();
 
 // Collect slider input
@@ -28,35 +29,62 @@ gridSizeInput.addEventListener("input", () => {
 
 // Functions
 
-// Fill colour in the grid
-
 // Create paint bucket tool
 
-/*function paintBucket() {
+function paintBucket() {
   const paintBucket = document.querySelector(".paintBucket");
 
   paintBucket.addEventListener("click", () => {
     paintBucketIsActive = !paintBucketIsActive;
+    drawingIsActive = false;
+    hoverIsActive = false;
 
     if (paintBucketIsActive) {
       paintBucket.style.border = "1px solid black";
       paintBucket.style.backgroundColor = "lightgrey";
-
-      floodFill();
     } else {
       paintBucket.style.border = "none";
       paintBucket.style.backgroundColor = "";
     }
+
+    applyMode();
   });
 }
 
 // Implement Flood Fill Algorithm for the paint bucket tool
 
-function dfs(grid, i, j, oldColor, newColor) {
-  const n = grid; // number of rows (i)
-  const m = grid; // number of columns (j)
+// Recursive Function
+function dfs(i, j, oldColor, newColor) {
+  const n = gridArr.length; // number of rows (i)
+  const m = gridArr[0].length; // number of columns (j)
+
+  // Base Cases
+  if (
+    i < 0 ||
+    i >= n ||
+    j < 0 ||
+    j >= m ||
+    grid[i][j].style.backgroundColor == newColor
+  ) {
+    return;
+  } else {
+    grid[i][j].style.backgroundColor = newColor;
+    dfs(i - 1, j, oldColor, newColor); // Up
+    dfs(i + 1, j, oldColor, newColor); // Down
+    dfs(i, j - 1, oldColor, newColor); // Left
+    dfs(i, j + 1, oldColor, newColor); // Right
+  }
 }
-function floodFill() {}*/
+
+// Non-Recursive
+function floodFill(i, j, newColor) {
+  let oldColor = grid[i][j].style.backgroundColor;
+
+  if (oldColor == newColor) {
+    return;
+  }
+  dfs(i, j, oldColor, newColor);
+}
 
 // Handle hover mode
 
@@ -67,7 +95,13 @@ function handleHover(event) {
 // Handle click mode
 
 function handleClick(event) {
-  event.target.style.backgroundColor = selection;
+  if (paintBucketIsActive) {
+    const i = event.target.dataset.row;
+    const j = event.target.dataset.col;
+    floodFill(parseInt(i), parseInt(j), selection);
+  } else if (drawingIsActive) {
+    event.target.style.backgroundColor = selection;
+  }
 }
 
 // Apply modes
@@ -75,13 +109,10 @@ function applyMode() {
   const gridSquare = document.querySelectorAll(".grid-square");
 
   gridSquare.forEach((square) => {
-    square.removeEventListener("mouseover", handleHover);
-    square.removeEventListener("click", handleClick);
-
-    if (hoverIsActive) {
-      square.addEventListener("mouseover", handleHover);
-    } else {
+    if (drawingIsActive) {
       square.addEventListener("click", handleClick);
+    } else if (hoverIsActive) {
+      square.addEventListener("mouseover", handleHover);
     }
   });
 }
@@ -95,6 +126,7 @@ function selectModes() {
   hoverMode.addEventListener("click", () => {
     hoverIsActive = true;
     drawingIsActive = false;
+    paintBucketIsActive = false;
     hoverMode.style.border = "1px solid black";
     hoverMode.style.backgroundColor = "lightgrey";
     drawingMode.style.backgroundColor = "";
@@ -105,6 +137,7 @@ function selectModes() {
   drawingMode.addEventListener("click", () => {
     drawingIsActive = true;
     hoverIsActive = false;
+    paintBucketIsActive = false;
     drawingMode.style.border = "1px solid black";
     drawingMode.style.backgroundColor = "lightgrey";
     hoverMode.style.backgroundColor = "";
@@ -198,15 +231,22 @@ function createGrid(gridSize) {
   const gridContainer = document.querySelector(".grid-container");
   gridContainer.innerHTML = "";
 
+  gridArr = [];
+
   const gridContainerSize = 600;
   let singleSqSize = gridContainerSize / gridSize;
 
-  for (let i = 0; i < gridSize * gridSize; i++) {
-    const gridSquare = document.createElement("div");
-    gridSquare.className = "grid-square";
-    gridSquare.style.width = `${singleSqSize}px`;
-    gridSquare.style.height = `${singleSqSize}px`;
-    gridContainer.appendChild(gridSquare);
+  for (let i = 0; i < gridSize; i++) {
+    let row = [];
+    for (let j = 0; j < gridSize; j++) {
+      const gridSquare = document.createElement("div");
+      gridSquare.className = "grid-square";
+      gridSquare.style.width = `${singleSqSize}px`;
+      gridSquare.style.height = `${singleSqSize}px`;
+      gridContainer.appendChild(gridSquare);
+      row.push(gridSquare);
+    }
+    gridArr.push(row);
   }
 }
 

@@ -1,6 +1,7 @@
-- Create a drawing mode 
+
 - Paint bucket algorithm
 - Work on the UI
-- Fix color dropper position
-- Fix quality of downloaded img
 - Add free hand drawing tools
+- Turn off other tools when one is in use
+- Give tool name when hovered over elements
+- i want both hover and drawing modes to disable when paint bucket is enabled. there is a small bug when in drawing mode it click firsts, then paint bucket stops the clicking but then unclicking it resorts back to hover in drawing mode which shouldnt happen
