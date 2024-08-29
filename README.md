@@ -1,5 +1,5 @@
 # Pixel Palette
-<img src="demo.png" alt="Pixel Art Example" width="300" height="300"/>
+<img src="demo.png" alt="Pixel Art Example" width="600" height="800"/>
 
    
 ## Live preview 
