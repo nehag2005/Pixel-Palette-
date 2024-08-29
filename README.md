@@ -1,5 +1,7 @@
 # Pixel Palette
 
+![Demo](demo.png)
+
    
 ## Live preview 
 
