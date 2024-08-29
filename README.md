@@ -1,5 +1,10 @@
 # Pixel Palette
 
+   
+## Live preview 
+
+[Pixel Palette](https://nehag2005.github.io/Pixel-Palette-/)
+
 ## Overview
 
 An interactive tool for creating and editing pixel art. This web-based application provides a range of modes and tools to help you design and refine your pixel art with precision and ease.
@@ -20,11 +25,6 @@ An interactive tool for creating and editing pixel art. This web-based applicati
 7. Download Button: Enables you to save your pixel art as a PNG image file.
 
 8. Dynamic Grid Creation: Adjusts the grid size to meet the specific requirements of your project.
-
-   
-## Live preview 
-
-[Pixel Palette](https://nehag2005.github.io/Pixel-Palette-/)
 
 ## Skills 
 
