@@ -1,1 +1,1 @@
-# Etch-a-Sketch
+#   Pixel Palette
