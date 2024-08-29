@@ -91,8 +91,8 @@ img {
 
 .active-tool {
   background-color: #eadef2;
-  outline: 2px solid #56386b;
-  outline-offset: 2px;
+  border-radius: 10px;
+  padding: 7px;
 }
 
 .hoverText {
@@ -120,6 +120,14 @@ img {
 .hoverText:hover .toolName {
   visibility: visible;
   opacity: 1;
+}
+
+.icon {
+  width: 30px;
+  height: 30px;
+  display: flex;
+  padding: 7px;
+  cursor: pointer;
 }
 
 /* slider */
