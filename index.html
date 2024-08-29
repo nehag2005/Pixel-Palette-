@@ -12,45 +12,60 @@
     <title>Etch-a-Sketch</title>
   </head>
   <body>
+    <div class="title">
     <div class="gridInput">
       <form action="/action_page.php">
+        <div class="title">
+          <div class="name">Pixel Palette</div>
+          <div class="signature">
+            <img src="Tools/linkedin.svg" alt="LinkedIn" />
+            <a href="https://www.linkedin.com/in/ng2005"> Neha Gurnani</a>
+          </div>
+        </div>
         <label id="gridSizeLabel" for="gridSizeInput">
           Select a grid size (16x16)
         </label>
         <input type="range" id="gridSizeInput" min="1" max="64" />
       </form>
       <div class="modeBox">
-        <div>Pick a mode</div>
         <div class="modes">
-          <div style="cursor: pointer" class="hover-mode">
+          <div style="cursor: pointer" class="hover-mode hoverText">
+            <div class="toolName">Hover Mode</div>
             <img src="./Tools/hoverMode.svg" alt="hoverMode" />
           </div>
-          <div style="cursor: pointer" class="drawing-mode">
+          <div style="cursor: pointer" class="drawing-mode hoverText">
+            <div class="toolName">Click Mode</div>
             <img src="./Tools/drawingMode.svg" alt="drawingMode" />
           </div>
         </div>
+        <div class="subtext">Pick a mode</div>
       </div>
     </div>
     <div class="toolset">
-      <div class="colorPicker">
+      <div class="colorPicker hoverText">
+        <div class="toolName">Color Picker</div>
         <input
           style="cursor: pointer"
           type="color"
           id="colorPickerInput"
           class="color-picker"
-          value="#000000"
+          value="#56386b"
         />
       </div>
-      <div style="cursor: pointer" class="eraser">
+      <div style="cursor: pointer" class="eraser hoverText">
+        <div class="toolName">Eraser</div>
         <img src="./Tools/eraserTool.svg" alt="eraser" />
       </div>
-      <div style="cursor: pointer" class="paintBucket">
+      <div style="cursor: pointer" class="paintBucket hoverText">
+        <div class="toolName">Paint Bucket</div>
         <img src="./Tools/paintBucket.svg" alt="Paint Bucket" />
       </div>
-      <div style="cursor: pointer" class="resetBtn">
+      <div style="cursor: pointer" class="resetBtn hoverText">
+        <div class="toolName">Reset</div>
         <img src="./Tools/reset.svg" alt="Reset Button" />
       </div>
-      <div style="cursor: pointer" class="downloadBtn">
+      <div style="cursor: pointer" class="downloadBtn hoverText">
+        <div class="toolName">Download</div>
         <img src="./Tools/download.svg" alt="Download Button" />
       </div>
     </div>

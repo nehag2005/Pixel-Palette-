@@ -3,9 +3,11 @@ let gridArr = [];
 let gridSizeValue;
 let eraserIsActive = false;
 let paintBucketIsActive = false;
-let hoverIsActive = true;
+let hoverIsActive = false;
 let drawingIsActive = false;
-let selection = "black";
+let selection = "#56386b";
+let previousMode = null;
+let modeSelected = false;
 
 // Function calls
 
@@ -15,6 +17,7 @@ reset();
 download();
 paintBucket();
 selectModes();
+applyMode();
 
 // Collect slider input
 
@@ -35,16 +38,33 @@ function paintBucket() {
   const paintBucket = document.querySelector(".paintBucket");
 
   paintBucket.addEventListener("click", () => {
+    if (!modeSelected) return;
     paintBucketIsActive = !paintBucketIsActive;
-    drawingIsActive = false;
-    hoverIsActive = false;
 
     if (paintBucketIsActive) {
-      paintBucket.style.border = "1px solid black";
-      paintBucket.style.backgroundColor = "lightgrey";
+      previousMode = { hoverIsActive, drawingIsActive };
+
+      paintBucket.classList.add("active-tool");
+
+      // Deactivate eraser tool
+      eraserIsActive = false;
+      const eraser = document.querySelector(".eraser");
+      eraser.classList.remove("active-tool");
+
+      const gridSquare = document.querySelectorAll(".grid-square");
+      gridSquare.forEach((square) => {
+        square.removeEventListener("mouseover", erase);
+      });
+
+      drawingIsActive = false;
+      hoverIsActive = false;
     } else {
-      paintBucket.style.border = "none";
-      paintBucket.style.backgroundColor = "";
+      paintBucket.classList.remove("active-tool");
+
+      if (previousMode) {
+        hoverIsActive = previousMode.hoverIsActive;
+        drawingIsActive = previousMode.drawingIsActive;
+      }
     }
 
     applyMode();
@@ -64,11 +84,11 @@ function dfs(i, j, oldColor, newColor) {
     i >= n ||
     j < 0 ||
     j >= m ||
-    grid[i][j].style.backgroundColor == newColor
+    gridArr[i][j].style.backgroundColor !== oldColor
   ) {
     return;
   } else {
-    grid[i][j].style.backgroundColor = newColor;
+    gridArr[i][j].style.backgroundColor = newColor;
     dfs(i - 1, j, oldColor, newColor); // Up
     dfs(i + 1, j, oldColor, newColor); // Down
     dfs(i, j - 1, oldColor, newColor); // Left
@@ -78,9 +98,9 @@ function dfs(i, j, oldColor, newColor) {
 
 // Non-Recursive
 function floodFill(i, j, newColor) {
-  let oldColor = grid[i][j].style.backgroundColor;
+  let oldColor = gridArr[i][j].style.backgroundColor;
 
-  if (oldColor == newColor) {
+  if (oldColor === newColor) {
     return;
   }
   dfs(i, j, oldColor, newColor);
@@ -94,7 +114,7 @@ function handleHover(event) {
 
 // Handle click mode
 
-function handleClick(event) {
+function applyColor(event) {
   if (paintBucketIsActive) {
     const i = event.target.dataset.row;
     const j = event.target.dataset.col;
@@ -108,13 +128,41 @@ function handleClick(event) {
 function applyMode() {
   const gridSquare = document.querySelectorAll(".grid-square");
 
+  // Remove all event listeners to reset the state
   gridSquare.forEach((square) => {
-    if (drawingIsActive) {
-      square.addEventListener("click", handleClick);
-    } else if (hoverIsActive) {
-      square.addEventListener("mouseover", handleHover);
-    }
+    square.removeEventListener("click", applyColor);
+    square.removeEventListener("mouseover", handleHover);
+    square.removeEventListener("mouseover", erase);
+    square.removeEventListener("mouseover", applyColor);
+    square.removeEventListener("mousedown", applyColor);
   });
+
+  if (paintBucketIsActive) {
+    gridSquare.forEach((square) => {
+      square.addEventListener("click", applyColor);
+    });
+  } else if (hoverIsActive) {
+    gridSquare.forEach((square) => {
+      square.addEventListener("mouseover", handleHover);
+    });
+  } else if (drawingIsActive) {
+    // Click and Drag Mode
+    gridSquare.forEach((square) => {
+      square.addEventListener("click", applyColor);
+    });
+
+    window.addEventListener("mousedown", () => {
+      gridSquare.forEach((square) => {
+        square.addEventListener("mouseover", applyColor);
+      });
+    });
+
+    window.addEventListener("mouseup", () => {
+      gridSquare.forEach((square) => {
+        square.removeEventListener("mouseover", applyColor);
+      });
+    });
+  }
 }
 
 // Select modes
@@ -122,27 +170,37 @@ function applyMode() {
 function selectModes() {
   const hoverMode = document.querySelector(".hover-mode");
   const drawingMode = document.querySelector(".drawing-mode");
+  const eraser = document.querySelector(".eraser");
+  const paintBucket = document.querySelector(".paintBucket");
 
   hoverMode.addEventListener("click", () => {
+    // Deactivate other tools
+    paintBucketIsActive = false;
+    eraserIsActive = false;
+    paintBucket.classList.remove("active-tool");
+    eraser.classList.remove("active-tool");
+
     hoverIsActive = true;
     drawingIsActive = false;
-    paintBucketIsActive = false;
-    hoverMode.style.border = "1px solid black";
-    hoverMode.style.backgroundColor = "lightgrey";
-    drawingMode.style.backgroundColor = "";
-    drawingMode.style.border = "none";
+    hoverMode.classList.add("active-tool");
+    drawingMode.classList.remove("active-tool");
     applyMode();
+    modeSelected = true;
   });
 
   drawingMode.addEventListener("click", () => {
+    // Deactivate other tools
+    paintBucketIsActive = false;
+    eraserIsActive = false;
+    paintBucket.classList.remove("active-tool");
+    eraser.classList.remove("active-tool");
+
     drawingIsActive = true;
     hoverIsActive = false;
-    paintBucketIsActive = false;
-    drawingMode.style.border = "1px solid black";
-    drawingMode.style.backgroundColor = "lightgrey";
-    hoverMode.style.backgroundColor = "";
-    hoverMode.style.border = "none";
+    hoverMode.classList.remove("active-tool");
+    drawingMode.classList.add("active-tool");
     applyMode();
+    modeSelected = true;
   });
 }
 
@@ -152,6 +210,7 @@ function download() {
   const downloadBtn = document.querySelector(".downloadBtn");
 
   downloadBtn.addEventListener("click", () => {
+    if (!modeSelected) return;
     const gridContainer = document.querySelector(".grid-container");
 
     html2canvas(gridContainer, { scale: 15 }).then(function (canvas) {
@@ -171,6 +230,7 @@ function reset() {
   const resetBtn = document.querySelector(".resetBtn");
 
   resetBtn.addEventListener("click", () => {
+    if (!modeSelected) return;
     const gridSquare = document.querySelectorAll(".grid-square");
     gridSquare.forEach((square) => {
       square.style.backgroundColor = "white";
@@ -183,44 +243,47 @@ function reset() {
 function colorPicker() {
   const colorPickerInput = document.getElementById("colorPickerInput");
   colorPickerInput.addEventListener("input", (event) => {
+    if (!modeSelected) return;
     selection = event.target.value;
-  });
-
-  colorPickerInput.addEventListener("click", () => {
-    colorPickerDropdown.click();
   });
 }
 
 // Create eraser tool
+function erase(event) {
+  event.target.style.backgroundColor = "white";
+}
 
 function eraserTool() {
   const eraser = document.querySelector(".eraser");
 
-  function erase(event) {
-    event.target.style.backgroundColor = "white";
-  }
-
   // Toggle the eraser tool
 
   eraser.addEventListener("click", () => {
+    if (!modeSelected) return;
     eraserIsActive = !eraserIsActive;
 
     if (eraserIsActive) {
-      eraser.style.border = "1px solid black";
-      eraser.style.backgroundColor = "lightgrey";
+      eraser.classList.add("active-tool");
+
+      // Deactivate paint tool
+      paintBucketIsActive = false;
+      const paintBucket = document.querySelector(".paintBucket");
+      paintBucket.classList.remove("active-tool");
+      paintBucket.removeEventListener("click", applyColor);
 
       const gridSquare = document.querySelectorAll(".grid-square");
       gridSquare.forEach((square) => {
         square.addEventListener("mouseover", erase);
       });
     } else {
-      eraser.style.border = "none";
-      eraser.style.backgroundColor = "";
+      eraser.classList.remove("active-tool");
 
       const gridSquare = document.querySelectorAll(".grid-square");
       gridSquare.forEach((square) => {
         square.removeEventListener("mouseover", erase);
       });
+
+      applyMode();
     }
   });
 }
@@ -243,6 +306,11 @@ function createGrid(gridSize) {
       gridSquare.className = "grid-square";
       gridSquare.style.width = `${singleSqSize}px`;
       gridSquare.style.height = `${singleSqSize}px`;
+
+      // Record grid square coordinates
+      gridSquare.dataset.row = i;
+      gridSquare.dataset.col = j;
+
       gridContainer.appendChild(gridSquare);
       row.push(gridSquare);
     }
