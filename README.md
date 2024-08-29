@@ -24,7 +24,7 @@ An interactive tool for creating and editing pixel art. This web-based applicati
    
 ## Live preview 
 
-[Pixel Palette][https://nehag2005.github.io/Pixel-Palette-/]
+[Pixel Palette](https://nehag2005.github.io/Pixel-Palette-/)
 
 ## Skills 
 
