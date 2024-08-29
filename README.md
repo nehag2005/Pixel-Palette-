@@ -1,5 +1,9 @@
 # Pixel Palette
-<img src="demo.png" alt="Pixel Art Example" width="500" height="700"/>
+<img src="demo.png" alt="Pixel Art Example" width="500" height="700" class="rounded-image" />
+
+.rounded-image {
+  border-radius: 15px; /* Adjust the value as needed */
+}
 
    
 ## Live preview 
