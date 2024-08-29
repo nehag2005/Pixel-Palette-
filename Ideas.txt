@@ -1,8 +1,0 @@
-
-- Work on the UI
-- Add free hand drawing tools
-- Add sketching tools
-- Add or remove grid lines
-- Fix paint tool
-- Reset tool picking when mode is changed mid way
-- Change activation style
