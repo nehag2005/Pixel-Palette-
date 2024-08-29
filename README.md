@@ -1,6 +1,6 @@
 # Pixel Palette
 
-![Demo](/Users/nehagurnani/repos/TOP/Pixel-Palette-/demo.png)
+![Demo](demo.png)
 
    
 ## Live preview 
