@@ -2,7 +2,7 @@
 
 ## Overview
 
-Welcome to Pixel Palette—an interactive tool for creating and editing pixel art. This web-based application provides a range of modes and tools to help you design and refine your pixel art with precision and ease.
+An interactive tool for creating and editing pixel art. This web-based application provides a range of modes and tools to help you design and refine your pixel art with precision and ease.
 
 ## Features
 1. Hover Mode
