@@ -11,7 +11,7 @@ An interactive tool for creating and editing pixel art. This web-based applicati
 
 3. Paint Bucket Tool: Utilizes the Flood Fill algorithm to change the color of contiguous areas sharing the same color.
 
-4. Eraser Tool: Lets you remove color from pixels by applying a white background.
+4. Eraser Tool: Lets you remove color from pixels.
 
 5. Color Picker: Allows you to select and apply different colors to your artwork.
 
