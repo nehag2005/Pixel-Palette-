@@ -5,18 +5,26 @@
 An interactive tool for creating and editing pixel art. This web-based application provides a range of modes and tools to help you design and refine your pixel art with precision and ease.
 
 ## Features
-1. Hover Mode
-2. Click & Drag Mode
-3. Paint Bucket Tool: It uses the Flood Fill algorithm to fill contiguous areas of the same color with a new color. Click on a grid square, and the tool will automatically fill all connected squares of the same color with your selected color.
-2. Eraser Tool
-3. Color Picker
-4. Reset Button
-5. Download Button: It allows you to save your pixel art as an image file (PNG). 
-6. Dynamic Grid Creation: Adjust the grid size to fit your project needs. 
+1. Hover Mode: Allows you to color pixels by hovering the cursor over them.
 
+2. Click & Drag Mode: Enables coloring pixels by clicking and dragging across the grid.
+
+3. Paint Bucket Tool: Utilizes the Flood Fill algorithm to change the color of contiguous areas sharing the same color.
+
+4. Eraser Tool: Lets you remove color from pixels by applying a white background.
+
+5. Color Picker: Allows you to select and apply different colors to your artwork.
+
+6. Reset Button: Clears all colors and resets the grid to its default state.
+
+7. Download Button: Enables you to save your pixel art as a PNG image file.
+
+8. Dynamic Grid Creation: Adjusts the grid size to meet the specific requirements of your project.
+
+   
 ## Live preview 
 
-[Webpage Link](https://nehag2005.github.io/Anime-Landing-Page/)
+[Pixel Palette](https://nehag2005.github.io/Anime-Landing-Page/)
 
 ## Skills 
 
